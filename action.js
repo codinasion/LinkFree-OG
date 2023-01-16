@@ -26,12 +26,7 @@ import generateProfileOg from "./script/generateProfileOg.js";
 
     if (GENERATE_PROFILE_OG === "true") {
       await console.log("Generating Profile OG");
-      await generateProfileOg(
-        LINK_FREE_OWNER,
-        LINK_FREE_REPO_NAME,
-        LINK_FREE_PROFILE_API,
-        TOKEN
-      );
+      await generateProfileOg(LINK_FREE_PROFILE_API);
     }
 
     // end of action

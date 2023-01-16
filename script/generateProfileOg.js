@@ -1,3 +1,5 @@
+import core from "@actions/core";
+
 import fetch from "node-fetch";
 
 import fs from "fs";
@@ -6,12 +8,7 @@ import getScreenshot from "./chromium.js";
 
 import ProfileOgTemplate from "../template/profile.js";
 
-export default async function generateProfileOg(
-  LINK_FREE_OWNER,
-  LINK_FREE_REPO_NAME,
-  LINK_FREE_PROFILE_API,
-  TOKEN
-) {
+export default async function generateProfileOg(LINK_FREE_PROFILE_API) {
   try {
     // Create profile directory
     const dirPath = "og/profile";
@@ -20,184 +17,168 @@ export default async function generateProfileOg(
     // Get profiles data
     await console.log("Get profiles data...");
 
-    const allPathsResponse = await fetch(
-      `https://api.github.com/repos/${LINK_FREE_OWNER}/${LINK_FREE_REPO_NAME}/git/trees/main?recursive=1`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `token ${TOKEN}`,
-        },
-      }
-    );
+    const allProfilesResponse = await fetch(`${LINK_FREE_PROFILE_API}`, {
+      method: "GET",
+    });
 
-    if (allPathsResponse.status !== 200) {
-      console.log("Error fetching all paths");
+    if (allProfilesResponse.status !== 200) {
+      core.setFailed("Error fetching profiles data");
       return;
     }
 
-    const allPaths = await allPathsResponse.json().then((data) => data.tree);
+    const allProfilesData = await allProfilesResponse.json();
 
-    await console.log("Cleaning up paths...");
-    const profilesPaths = await allPaths.filter((path) =>
-      path.path.includes("data/")
-    );
+    await console.log(`Total profiles: ${allProfilesData.length}...`);
 
-    for (const profilePath of profilesPaths) {
-      if (
-        profilePath.path.endsWith(".json") &&
-        !profilePath.path.replace("data/", "").includes("/")
-      ) {
-        let username = profilePath.path
-          .replace("data/", "")
-          .replace(".json", "");
-        await console.log(`Generating profile for ${username}...`);
+    for (const profile of allProfilesData) {
+      let username = profile.username;
+      await console.log(`Generating profile for ${username}...`);
 
-        const profileResponse = await fetch(
-          `${LINK_FREE_PROFILE_API}/${username}`,
-          {
-            method: "GET",
-          }
-        );
-
-        if (profileResponse.status !== 200) {
-          console.log(`Error fetching profile data for ${username}`);
-          continue;
+      const profileResponse = await fetch(
+        `${LINK_FREE_PROFILE_API}/${username}`,
+        {
+          method: "GET",
         }
+      );
 
-        const profileData = await profileResponse.json();
-
-        const userSocialLinks = [];
-
-        if (profileData.socials) {
-          await console.log("Get social links...");
-          for (let link of profileData.socials) {
-            if (
-              !userSocialLinks.some(
-                (l) =>
-                  l.url.replace("https://", "").replace("http://", "") ===
-                  link.url.replace("https://", "").replace("http://", "")
-              )
-            ) {
-              if (link.icon === "FaTwitter") {
-                userSocialLinks.push({
-                  icon: "twitter",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaGithub") {
-                userSocialLinks.push({
-                  icon: "github",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaYoutube") {
-                userSocialLinks.push({
-                  icon: "youtube",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaLinkedin") {
-                userSocialLinks.push({
-                  icon: "linkedin",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaTwitch") {
-                userSocialLinks.push({
-                  icon: "twitch",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaInstagram") {
-                userSocialLinks.push({
-                  icon: "instagram",
-                  url: link.url,
-                });
-              }
-            }
-          }
-        }
-
-        if (profileData.links) {
-          await console.log("Get links...");
-          for (let link of profileData.links) {
-            if (
-              !userSocialLinks.some(
-                (l) =>
-                  l.url.replace("https://", "").replace("http://", "") ===
-                  link.url.replace("https://", "").replace("http://", "")
-              )
-            ) {
-              if (link.icon === "FaTwitter") {
-                userSocialLinks.push({
-                  icon: "twitter",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaGithub") {
-                userSocialLinks.push({
-                  icon: "github",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaYoutube") {
-                userSocialLinks.push({
-                  icon: "youtube",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaLinkedin") {
-                userSocialLinks.push({
-                  icon: "linkedin",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaTwitch") {
-                userSocialLinks.push({
-                  icon: "twitch",
-                  url: link.url,
-                });
-              }
-              if (link.icon === "FaInstagram") {
-                userSocialLinks.push({
-                  icon: "instagram",
-                  url: link.url,
-                });
-              }
-            }
-          }
-        }
-
-        // Remove duplicates icon and url pairs
-        userSocialLinks.filter((v, i, a) => a.findIndex((t) => t === v) === i);
-
-        await console.log(userSocialLinks);
-
-        let userData = {
-          username: username,
-          userImage: profileData.avatar,
-          userName: profileData.name,
-          userBio: profileData.bio,
-          userTags: profileData.tags,
-          userSocialLinks: userSocialLinks,
-        };
-
-        // generate html
-        await console.log("Generate html...");
-        const html = await ProfileOgTemplate(userData);
-
-        // get screenshot
-        await console.log("Get screenshot...");
-        const screenshot_data = {
-          html: html,
-          filePath: `${dirPath}/${username}.png`,
-        };
-
-        await getScreenshot(screenshot_data);
-
-        // For testing a single profile
-        // break;
+      if (profileResponse.status !== 200) {
+        core.setFailed(`Error fetching profile data for ${username}`);
+        continue;
       }
+
+      const profileData = await profileResponse.json();
+
+      const userSocialLinks = [];
+
+      if (profileData.socials) {
+        await console.log("Get social links...");
+        for (let link of profileData.socials) {
+          if (
+            !userSocialLinks.some(
+              (l) =>
+                l.url.replace("https://", "").replace("http://", "") ===
+                link.url.replace("https://", "").replace("http://", "")
+            )
+          ) {
+            if (link.icon === "FaTwitter") {
+              userSocialLinks.push({
+                icon: "twitter",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaGithub") {
+              userSocialLinks.push({
+                icon: "github",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaYoutube") {
+              userSocialLinks.push({
+                icon: "youtube",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaLinkedin") {
+              userSocialLinks.push({
+                icon: "linkedin",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaTwitch") {
+              userSocialLinks.push({
+                icon: "twitch",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaInstagram") {
+              userSocialLinks.push({
+                icon: "instagram",
+                url: link.url,
+              });
+            }
+          }
+        }
+      }
+
+      if (profileData.links) {
+        await console.log("Get links...");
+        for (let link of profileData.links) {
+          if (
+            !userSocialLinks.some(
+              (l) =>
+                l.url.replace("https://", "").replace("http://", "") ===
+                link.url.replace("https://", "").replace("http://", "")
+            )
+          ) {
+            if (link.icon === "FaTwitter") {
+              userSocialLinks.push({
+                icon: "twitter",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaGithub") {
+              userSocialLinks.push({
+                icon: "github",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaYoutube") {
+              userSocialLinks.push({
+                icon: "youtube",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaLinkedin") {
+              userSocialLinks.push({
+                icon: "linkedin",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaTwitch") {
+              userSocialLinks.push({
+                icon: "twitch",
+                url: link.url,
+              });
+            }
+            if (link.icon === "FaInstagram") {
+              userSocialLinks.push({
+                icon: "instagram",
+                url: link.url,
+              });
+            }
+          }
+        }
+      }
+
+      // Remove duplicates icon and url pairs
+      userSocialLinks.filter((v, i, a) => a.findIndex((t) => t === v) === i);
+
+      // await console.log(userSocialLinks);
+
+      let userData = {
+        username: username,
+        userImage: profileData.avatar,
+        userName: profileData.name,
+        userBio: profileData.bio,
+        userTags: profileData.tags,
+        userSocialLinks: userSocialLinks,
+      };
+
+      // generate html
+      await console.log("Generate html...");
+      const html = await ProfileOgTemplate(userData);
+
+      // get screenshot
+      await console.log("Get screenshot...");
+      const screenshot_data = {
+        html: html,
+        filePath: `${dirPath}/${username}.png`,
+      };
+
+      await getScreenshot(screenshot_data);
+
+      // For testing a single profile
+      // break;
     }
   } catch (err) {
     console.log(err);
