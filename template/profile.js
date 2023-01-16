@@ -132,31 +132,43 @@ const ProfileOgTemplate = (
                               ? link.url
                                   .replace("https://twitter.com/", "")
                                   .replace("https://www.twitter.com/", "")
+                                  .replace("http://twitter.com/", "")
+                                  .replace("http://www.twitter.com/", "")
                                   .split("/")[0]
                               : link.icon === "github"
                               ? link.url
                                   .replace("https://github.com/", "")
                                   .replace("https://www.github.com/", "")
+                                  .replace("http://github.com/", "")
+                                  .replace("http://www.github.com/", "")
                                   .split("/")[0]
                               : link.icon === "youtube"
                               ? link.url
                                   .replace("https://youtube.com/", "")
                                   .replace("https://www.youtube.com/", "")
+                                  .replace("http://youtube.com/", "")
+                                  .replace("http://www.youtube.com/", "")
                                   .split("/")[0]
                               : link.icon === "linkedin"
                               ? link.url
                                   .replace("https://linkedin.com/in/", "")
                                   .replace("https://www.linkedin.com/in/", "")
+                                  .replace("http://linkedin.com/in/", "")
+                                  .replace("http://www.linkedin.com/in/", "")
                                   .split("/")[0]
                               : link.icon === "twitch"
                               ? link.url
                                   .replace("https://twitch.tv/", "")
                                   .replace("https://www.twitch.tv/", "")
+                                  .replace("http://twitch.tv/", "")
+                                  .replace("http://www.twitch.tv/", "")
                                   .split("/")[0]
                               : link.icon === "instagram"
                               ? link.url
                                   .replace("https://instagram.com/", "")
                                   .replace("https://www.instagram.com/", "")
+                                  .replace("http://instagram.com/", "")
+                                  .replace("http://www.instagram.com/", "")
                                   .split("/")[0]
                               : ""
                           }

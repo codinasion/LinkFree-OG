@@ -71,7 +71,13 @@ export default async function generateProfileOg(
         if (profileData.socials) {
           await console.log("Get social links...");
           for (let link of profileData.socials) {
-            if (!userSocialLinks.some((l) => l.url === link.url)) {
+            if (
+              !userSocialLinks.some(
+                (l) =>
+                  l.url.replace("https://", "").replace("http://", "") ===
+                  link.url.replace("https://", "").replace("http://", "")
+              )
+            ) {
               if (link.icon === "FaTwitter") {
                 userSocialLinks.push({
                   icon: "twitter",
@@ -115,7 +121,13 @@ export default async function generateProfileOg(
         if (profileData.links) {
           await console.log("Get links...");
           for (let link of profileData.links) {
-            if (!userSocialLinks.some((l) => l.url === link.url)) {
+            if (
+              !userSocialLinks.some(
+                (l) =>
+                  l.url.replace("https://", "").replace("http://", "") ===
+                  link.url.replace("https://", "").replace("http://", "")
+              )
+            ) {
               if (link.icon === "FaTwitter") {
                 userSocialLinks.push({
                   icon: "twitter",
