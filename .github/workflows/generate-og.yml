@@ -42,7 +42,7 @@ jobs:
       - name: Generate LinkFree OG Images
         uses: ./action/
         with:
-          # GENERATE_HOME_OG: true
+          GENERATE_HOME_OG: true
           GENERATE_PROFILE_OG: true
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

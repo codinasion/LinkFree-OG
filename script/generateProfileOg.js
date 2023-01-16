@@ -191,7 +191,8 @@ export default async function generateProfileOg(
 
         await getScreenshot(screenshot_data);
 
-        break;
+        // For testing a single profile
+        // break;
       }
     }
   } catch (err) {
