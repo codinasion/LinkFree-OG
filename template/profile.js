@@ -76,36 +76,41 @@ const ProfileOgTemplate = (
               </div>
               <div class="col-12 p-1">
                   <h6 class="text-muted">
-                        ${userData.userBio.replace(
-                          /(?=\*\*)((.|\n)*)(?<=\*\*)/gm,
-                          "<strong>$1</strong>"
-                        )}
+                        ${userData.userBio
+                          .replace(
+                            /(?=\*\*)((.|\n)*)(?<=\*\*)/gm,
+                            "<strong>$1</strong>"
+                          )
+                          .replace(/\*\*/gm, "")}
                   </h6>
               </div>
               ${
-                userData.userTags.length > 0 &&
-                `<div class="col-9 pt-4">
+                userData.userTags
+                  ? `<div class="col-9 pt-4">
                 ${userData.userTags
                   .map(
                     (tag) =>
                       `<span class="badge text-bg-secondary shadow-lg m-2 p-2">${tag}</span>`
                   )
                   .join("")}
-                </div>
-              <div class="col-12 mt-4">
-                  <h5>
-                      <b>Connect With Me 🤝</b>
-                  </h5>
-              </div>`
+                </div>`
+                  : ""
               }
               ${
-                userData.userSocialLinks.length > 0 &&
-                `<div class="col-12 mt-2">
+                userData.userSocialLinks
+                  ? `<div class="col-12 mt-4">
+                <h5>
+                    <b>Connect With Me 🤝</b>
+                </h5>
+            </div>
+            <div class="col-12 mt-2">
                 <div class="row" style="margin-left: 1px">
                 ${userData.userSocialLinks
                   .slice(0, 10)
-                  .map(
-                    (link) => `<div class="col-6 p-2">
+                  .map((link) =>
+                    link.icon === "youtube" && link.url.includes("channel")
+                      ? ""
+                      : `<div class="col-6 p-2">
                       <i class="fa ${
                         link.icon === "twitter"
                           ? "fa-twitter"
@@ -161,6 +166,7 @@ const ProfileOgTemplate = (
                   .join("")}
                 </div>
             </div>`
+                  : ""
               }
               <div class="col-12 mt-4">
                   <img src="https://avatars.githubusercontent.com/u/66388388?s=20&v=4" alt="EddieHub"

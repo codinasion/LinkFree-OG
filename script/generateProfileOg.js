@@ -71,41 +71,43 @@ export default async function generateProfileOg(
         if (profileData.socials) {
           await console.log("Get social links...");
           for (let link of profileData.socials) {
-            if (link.icon === "FaTwitter") {
-              userSocialLinks.push({
-                icon: "twitter",
-                url: link.url,
-              });
-            }
-            if (link.icon === "FaGithub") {
-              userSocialLinks.push({
-                icon: "github",
-                url: link.url,
-              });
-            }
-            if (link.icon === "FaYoutube") {
-              userSocialLinks.push({
-                icon: "youtube",
-                url: link.url,
-              });
-            }
-            if (link.icon === "FaLinkedin") {
-              userSocialLinks.push({
-                icon: "linkedin",
-                url: link.url,
-              });
-            }
-            if (link.icon === "FaTwitch") {
-              userSocialLinks.push({
-                icon: "twitch",
-                url: link.url,
-              });
-            }
-            if (link.icon === "FaInstagram") {
-              userSocialLinks.push({
-                icon: "instagram",
-                url: link.url,
-              });
+            if (!userSocialLinks.some((l) => l.url === link.url)) {
+              if (link.icon === "FaTwitter") {
+                userSocialLinks.push({
+                  icon: "twitter",
+                  url: link.url,
+                });
+              }
+              if (link.icon === "FaGithub") {
+                userSocialLinks.push({
+                  icon: "github",
+                  url: link.url,
+                });
+              }
+              if (link.icon === "FaYoutube") {
+                userSocialLinks.push({
+                  icon: "youtube",
+                  url: link.url,
+                });
+              }
+              if (link.icon === "FaLinkedin") {
+                userSocialLinks.push({
+                  icon: "linkedin",
+                  url: link.url,
+                });
+              }
+              if (link.icon === "FaTwitch") {
+                userSocialLinks.push({
+                  icon: "twitch",
+                  url: link.url,
+                });
+              }
+              if (link.icon === "FaInstagram") {
+                userSocialLinks.push({
+                  icon: "instagram",
+                  url: link.url,
+                });
+              }
             }
           }
         }
@@ -113,59 +115,49 @@ export default async function generateProfileOg(
         if (profileData.links) {
           await console.log("Get links...");
           for (let link of profileData.links) {
-            if (link.icon === "FaTwitter") {
-              let data = {
-                icon: "twitter",
-                url: link.url,
-              };
-              if (!userSocialLinks.includes(data)) {
-                userSocialLinks.push(data);
+            if (!userSocialLinks.some((l) => l.url === link.url)) {
+              if (link.icon === "FaTwitter") {
+                userSocialLinks.push({
+                  icon: "twitter",
+                  url: link.url,
+                });
               }
-            }
-            if (link.icon === "FaGithub") {
-              let data = {
-                icon: "github",
-                url: link.url,
-              };
-              if (!userSocialLinks.includes(data)) {
-                userSocialLinks.push(data);
+              if (link.icon === "FaGithub") {
+                userSocialLinks.push({
+                  icon: "github",
+                  url: link.url,
+                });
               }
-            }
-            if (link.icon === "FaYoutube") {
-              let data = {
-                icon: "youtube",
-                url: link.url,
-              };
-              if (!userSocialLinks.includes(data)) {
-                userSocialLinks.push(data);
+              if (link.icon === "FaYoutube") {
+                userSocialLinks.push({
+                  icon: "youtube",
+                  url: link.url,
+                });
               }
-            }
-            if (link.icon === "FaLinkedin") {
-              let data = {
-                icon: "linkedin",
-                url: link.url,
-              };
-              if (!userSocialLinks.includes(data)) {
-                userSocialLinks.push(data);
+              if (link.icon === "FaLinkedin") {
+                userSocialLinks.push({
+                  icon: "linkedin",
+                  url: link.url,
+                });
               }
-            }
-            if (link.icon === "FaTwitch") {
-              let data = {
-                icon: "twitch",
-                url: link.url,
-              };
-              if (!userSocialLinks.includes(data)) {
-                userSocialLinks.push(data);
+              if (link.icon === "FaTwitch") {
+                userSocialLinks.push({
+                  icon: "twitch",
+                  url: link.url,
+                });
               }
-            }
-            if (link.icon === "FaInstagram") {
-              userSocialLinks.push({
-                icon: "instagram",
-                url: link.url,
-              });
+              if (link.icon === "FaInstagram") {
+                userSocialLinks.push({
+                  icon: "instagram",
+                  url: link.url,
+                });
+              }
             }
           }
         }
+
+        // Remove duplicates icon and url pairs
+        userSocialLinks.filter((v, i, a) => a.findIndex((t) => t === v) === i);
 
         await console.log(userSocialLinks);
 
