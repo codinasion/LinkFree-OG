@@ -1,3 +1,5 @@
+import core from "@actions/core";
+
 import fetch from "node-fetch";
 
 import fs from "fs";
@@ -27,7 +29,7 @@ export default async function generateHomeOg(
     );
 
     if (repoDataResponse.status !== 200) {
-      console.log("Error fetching repo data");
+      core.setFailed("Error fetching repo data");
       return;
     }
 
@@ -55,7 +57,7 @@ export default async function generateHomeOg(
       );
 
       if (contributorsResponse.status !== 200) {
-        console.log("Error fetching contributors");
+        core.setFailed("Error fetching contributors");
         break;
       } else {
         const contributors = await contributorsResponse.json();

@@ -74,16 +74,20 @@ const ProfileOgTemplate = (
                       <b>${userData.userName}</b>
                   </h1>
               </div>
-              <div class="col-12 p-1">
-                  <h6 class="text-muted">
-                        ${userData.userBio
-                          .replace(
-                            /(?=\*\*)((.|\n)*)(?<=\*\*)/gm,
-                            "<strong>$1</strong>"
-                          )
-                          .replace(/\*\*/gm, "")}
-                  </h6>
-              </div>
+              ${
+                userData.userBio
+                  ? `<div class="col-12 p-1">
+                <h6 class="text-muted">
+                      ${userData.userBio
+                        .replace(
+                          /(?=\*\*)((.|\n)*)(?<=\*\*)/gm,
+                          "<strong>$1</strong>"
+                        )
+                        .replace(/\*\*/gm, "")}
+                </h6>
+            </div>`
+                  : ""
+              }
               ${
                 userData.userTags
                   ? `<div class="col-9 pt-4">
