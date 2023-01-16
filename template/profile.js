@@ -82,7 +82,9 @@ const ProfileOgTemplate = (
                         )}
                   </h6>
               </div>
-              <div class="col-9 pt-4">
+              ${
+                userData.userTags.length > 0 &&
+                `<div class="col-9 pt-4">
                 ${userData.userTags
                   .map(
                     (tag) =>
@@ -94,68 +96,72 @@ const ProfileOgTemplate = (
                   <h5>
                       <b>Connect With Me 🤝</b>
                   </h5>
-              </div>
-              <div class="col-12 mt-2">
-                  <div class="row" style="margin-left: 1px">
-                  ${userData.userSocialLinks
-                    .slice(0, 10)
-                    .map(
-                      (link) => `<div class="col-6 p-2">
-                        <i class="fa ${
-                          link.icon === "twitter"
-                            ? "fa-twitter"
-                            : link.icon === "github"
-                            ? "fa-github"
-                            : link.icon === "youtube"
-                            ? "fa-youtube-play"
-                            : link.icon === "linkedin"
-                            ? "fa-linkedin"
-                            : link.icon === "twitch"
-                            ? "fa-twitch"
-                            : link.icon === "instagram"
-                            ? "fa-instagram"
-                            : ""
-                        }" style="font-size:20px;"></i>
-                        <b>
-                            /${
-                              link.icon === "twitter"
-                                ? link.url
-                                    .replace("https://twitter.com/", "")
-                                    .replace("https://www.twitter.com/", "")
-                                    .split("/")[0]
-                                : link.icon === "github"
-                                ? link.url
-                                    .replace("https://github.com/", "")
-                                    .replace("https://www.github.com/", "")
-                                    .split("/")[0]
-                                : link.icon === "youtube"
-                                ? link.url
-                                    .replace("https://youtube.com/", "")
-                                    .replace("https://www.youtube.com/", "")
-                                    .split("/")[0]
-                                : link.icon === "linkedin"
-                                ? link.url
-                                    .replace("https://linkedin.com/in/", "")
-                                    .replace("https://www.linkedin.com/in/", "")
-                                    .split("/")[0]
-                                : link.icon === "twitch"
-                                ? link.url
-                                    .replace("https://twitch.tv/", "")
-                                    .replace("https://www.twitch.tv/", "")
-                                    .split("/")[0]
-                                : link.icon === "instagram"
-                                ? link.url
-                                    .replace("https://instagram.com/", "")
-                                    .replace("https://www.instagram.com/", "")
-                                    .split("/")[0]
-                                : ""
-                            }
-                        </b>
-                    </div>`
-                    )
-                    .join("")}
-                  </div>
-              </div>
+              </div>`
+              }
+              ${
+                userData.userSocialLinks.length > 0 &&
+                `<div class="col-12 mt-2">
+                <div class="row" style="margin-left: 1px">
+                ${userData.userSocialLinks
+                  .slice(0, 10)
+                  .map(
+                    (link) => `<div class="col-6 p-2">
+                      <i class="fa ${
+                        link.icon === "twitter"
+                          ? "fa-twitter"
+                          : link.icon === "github"
+                          ? "fa-github"
+                          : link.icon === "youtube"
+                          ? "fa-youtube-play"
+                          : link.icon === "linkedin"
+                          ? "fa-linkedin"
+                          : link.icon === "twitch"
+                          ? "fa-twitch"
+                          : link.icon === "instagram"
+                          ? "fa-instagram"
+                          : ""
+                      }" style="font-size:20px;"></i>
+                      <b>
+                          /${
+                            link.icon === "twitter"
+                              ? link.url
+                                  .replace("https://twitter.com/", "")
+                                  .replace("https://www.twitter.com/", "")
+                                  .split("/")[0]
+                              : link.icon === "github"
+                              ? link.url
+                                  .replace("https://github.com/", "")
+                                  .replace("https://www.github.com/", "")
+                                  .split("/")[0]
+                              : link.icon === "youtube"
+                              ? link.url
+                                  .replace("https://youtube.com/", "")
+                                  .replace("https://www.youtube.com/", "")
+                                  .split("/")[0]
+                              : link.icon === "linkedin"
+                              ? link.url
+                                  .replace("https://linkedin.com/in/", "")
+                                  .replace("https://www.linkedin.com/in/", "")
+                                  .split("/")[0]
+                              : link.icon === "twitch"
+                              ? link.url
+                                  .replace("https://twitch.tv/", "")
+                                  .replace("https://www.twitch.tv/", "")
+                                  .split("/")[0]
+                              : link.icon === "instagram"
+                              ? link.url
+                                  .replace("https://instagram.com/", "")
+                                  .replace("https://www.instagram.com/", "")
+                                  .split("/")[0]
+                              : ""
+                          }
+                      </b>
+                  </div>`
+                  )
+                  .join("")}
+                </div>
+            </div>`
+              }
               <div class="col-12 mt-4">
                   <img src="https://avatars.githubusercontent.com/u/66388388?s=20&v=4" alt="EddieHub"
                       class="rounded-3" style="width: 20px">
