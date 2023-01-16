@@ -16,6 +16,11 @@ inputs:
     required: true
     default: "LinkFree"
 
+  LINK_FREE_PROFILE_API:
+    description: "LinkFree Profile API"
+    required: true
+    default: "https://linkfree.eddiehub.io/api/users"
+
   ######################################################
   ##               Tokens Related Inputs              ##
   ######################################################
@@ -28,6 +33,11 @@ inputs:
   ######################################################
   GENERATE_HOME_OG:
     description: "generate homepage og image"
+    required: true
+    default: "false"
+  
+  GENERATE_PROFILE_OG:
+    description: "generate profile og images"
     required: true
     default: "false"
 

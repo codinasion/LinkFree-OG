@@ -9,9 +9,9 @@ import getScreenshot from "./chromium.js";
 import HomeOgTemplate from "../template/home.js";
 
 export default async function generateHomeOg(
-  TOKEN,
   LINK_FREE_OWNER,
-  LINK_FREE_REPO_NAME
+  LINK_FREE_REPO_NAME,
+  TOKEN
 ) {
   try {
     // Get repository data
@@ -101,7 +101,6 @@ export default async function generateHomeOg(
     const restOfContributors =
       contributorsList.length - contributorsToShow.length;
 
-    // generate html
     await console.log("Generate html...");
     const html = await HomeOgTemplate(
       repoOwner,

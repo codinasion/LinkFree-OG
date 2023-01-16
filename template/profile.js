@@ -1,4 +1,33 @@
-const ProfileOgTemplate = () => {
+const ProfileOgTemplate = (
+  userData = {
+    username: "eddiejaoude",
+    userImage: "https://github.com/eddiejaoude.png",
+    userName: "Eddie Jaoude",
+    userBio: "Open Source DevRel | Founder of **EddieHub** | **GitHub** Star",
+    userTags: [
+      "Open Source",
+      "Javascript",
+      "Typescript",
+      "NextJS",
+      "DevOps",
+      "DevRel",
+    ],
+    userSocialLinks: [
+      {
+        icon: "FaTwitter",
+        url: "https://twitter.com/eddiejaoude",
+      },
+      {
+        icon: "FaGithub",
+        url: "https://github.com/eddiejaoude",
+      },
+      {
+        icon: "FaYoutube",
+        url: "https://youtube.com/eddiejaoude",
+      },
+    ],
+  }
+) => {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -27,35 +56,40 @@ const ProfileOgTemplate = () => {
           }
       </style>
   
-      <title>Eddie Jaoude</title>
+      <title>${userData.userName}</title>
   </head>
   
   <body class="p-5">
   
       <div class="row">
           <div class="col-6">
-              <img src="https://github.com/eddiejaoude.png" alt="Eddie Jaoude" class="rounded-3 shadow-lg"
+              <img src=${userData.userImage} alt=${
+    userData.userName
+  } class="rounded-3 shadow-lg"
                   style="width: 500px">
           </div>
           <div class="col-6 pt-4">
               <div class="col-12 pt-1">
                   <h1>
-                      <b>Eddie Jaoude</b>
+                      <b>${userData.userName}</b>
                   </h1>
               </div>
               <div class="col-12 p-1">
                   <h6 class="text-muted">
-                      Open Source DevRel | Founder of <b>EddieHub</b> | <b>GitHub</b> Star
+                        ${userData.userBio.replace(
+                          /(?=\*\*)((.|\n)*)(?<=\*\*)/gm,
+                          "<strong>$1</strong>"
+                        )}
                   </h6>
               </div>
               <div class="col-9 pt-4">
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">Open Source</span>
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">Javascript</span>
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">Typescript</span>
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">NextJS</span>
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">DevOps</span>
-                  <span class="badge text-bg-secondary shadow-lg m-2 p-2">DevRel</span>
-              </div>
+                ${userData.userTags
+                  .map(
+                    (tag) =>
+                      `<span class="badge text-bg-secondary shadow-lg m-2 p-2">${tag}</span>`
+                  )
+                  .join("")}
+                </div>
               <div class="col-12 mt-4">
                   <h5>
                       <b>Connect With Me 🤝</b>
@@ -63,45 +97,72 @@ const ProfileOgTemplate = () => {
               </div>
               <div class="col-12 mt-2">
                   <div class="row" style="margin-left: 1px">
-                      <div class="col-6 p-2">
-                          <i class="fa fa-github" style="font-size:20px;"></i>
-                          <b>
-                              /eddiejaoude
-                          </b>
-                      </div>
-                      <div class="col-6 p-2">
-                          <i class="fa fa-twitter" style="font-size:20px;"></i>
-                          <b>
-                              /eddiejaoude
-                          </b>
-                      </div>
-                      <div class="col-6 p-2">
-                          <i class="fa fa-youtube-play" style="font-size:20px;"></i>
-                          <b>
-                              /eddiejaoude
-                          </b>
-                      </div>
-                      <div class="col-6 p-2">
-                          <i class="fa fa-linkedin" style="font-size:20px;"></i>
-                          <b>
-                              /eddiejaoude
-                          </b>
-                      </div>
-                      <div class="col-6 p-2">
-                          <i class="fa fa-twitch" style="font-size:20px;"></i>
-                          <b>
-                              /eddiejaoude
-                          </b>
-                      </div>
+                  ${userData.userSocialLinks
+                    .slice(0, 10)
+                    .map(
+                      (link) => `<div class="col-6 p-2">
+                        <i class="fa ${
+                          link.icon === "twitter"
+                            ? "fa-twitter"
+                            : link.icon === "github"
+                            ? "fa-github"
+                            : link.icon === "youtube"
+                            ? "fa-youtube-play"
+                            : link.icon === "linkedin"
+                            ? "fa-linkedin"
+                            : link.icon === "twitch"
+                            ? "fa-twitch"
+                            : link.icon === "instagram"
+                            ? "fa-instagram"
+                            : ""
+                        }" style="font-size:20px;"></i>
+                        <b>
+                            /${
+                              link.icon === "twitter"
+                                ? link.url
+                                    .replace("https://twitter.com/", "")
+                                    .replace("https://www.twitter.com/", "")
+                                    .split("/")[0]
+                                : link.icon === "github"
+                                ? link.url
+                                    .replace("https://github.com/", "")
+                                    .replace("https://www.github.com/", "")
+                                    .split("/")[0]
+                                : link.icon === "youtube"
+                                ? link.url
+                                    .replace("https://youtube.com/", "")
+                                    .replace("https://www.youtube.com/", "")
+                                    .split("/")[0]
+                                : link.icon === "linkedin"
+                                ? link.url
+                                    .replace("https://linkedin.com/in/", "")
+                                    .replace("https://www.linkedin.com/in/", "")
+                                    .split("/")[0]
+                                : link.icon === "twitch"
+                                ? link.url
+                                    .replace("https://twitch.tv/", "")
+                                    .replace("https://www.twitch.tv/", "")
+                                    .split("/")[0]
+                                : link.icon === "instagram"
+                                ? link.url
+                                    .replace("https://instagram.com/", "")
+                                    .replace("https://www.instagram.com/", "")
+                                    .split("/")[0]
+                                : ""
+                            }
+                        </b>
+                    </div>`
+                    )
+                    .join("")}
                   </div>
               </div>
               <div class="col-12 mt-4">
-                  <img src="https://avatars.githubusercontent.com/u/66388388?s=20&v=4" alt="Eddie Jaoude"
+                  <img src="https://avatars.githubusercontent.com/u/66388388?s=20&v=4" alt="EddieHub"
                       class="rounded-3" style="width: 20px">
                   <small class="pt-1">
                       linkfree.eddiehub.io/
                       <b>
-                          eddiejaoude
+                          ${userData.username}
                       </b>
                   </small>
               </div>

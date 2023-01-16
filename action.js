@@ -10,19 +10,29 @@ import generateProfileOg from "./script/generateProfileOg.js";
     // LinkFree data
     const LINK_FREE_OWNER = await core.getInput("LINK_FREE_OWNER");
     const LINK_FREE_REPO_NAME = await core.getInput("LINK_FREE_REPO_NAME");
+    const LINK_FREE_PROFILE_API = await core.getInput("LINK_FREE_PROFILE_API");
 
     // Github Token data
     const TOKEN = await core.getInput("TOKEN");
 
     // Workflow trigger data
     const GENERATE_HOME_OG = await core.getInput("GENERATE_HOME_OG");
+    const GENERATE_PROFILE_OG = await core.getInput("GENERATE_PROFILE_OG");
 
     if (GENERATE_HOME_OG === "true") {
       await console.log("Generating Home OG");
-      await generateHomeOg(TOKEN, LINK_FREE_OWNER, LINK_FREE_REPO_NAME);
+      await generateHomeOg(LINK_FREE_OWNER, LINK_FREE_REPO_NAME, TOKEN);
     }
 
-    // await generateProfileOg();
+    if (GENERATE_PROFILE_OG === "true") {
+      await console.log("Generating Profile OG");
+      await generateProfileOg(
+        LINK_FREE_OWNER,
+        LINK_FREE_REPO_NAME,
+        LINK_FREE_PROFILE_API,
+        TOKEN
+      );
+    }
 
     // end of action
   } catch (e) {
