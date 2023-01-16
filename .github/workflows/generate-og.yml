@@ -1,0 +1,59 @@
+name: Generate LinkFree OG Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate_og_images:
+    if: github.repository == 'codinasion/LinkFree-OG'
+    runs-on: ubuntu-latest
+    name: Generate LinkFree OG Images
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      ##########  Get Date  ##########
+      - name: Get Date
+        id: date
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 5.5
+          format: "YYYY-MM-DD-hh-mm"
+
+      # Cache node_modules
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('yarn.lock') }}
+
+      # Install dependencies
+      - name: Yarn
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          yarn
+
+      ##########  Generate OG Images  ##########
+      - name: Generate LinkFree OG Images
+        uses: ./action/
+        with:
+          GENERATE_HOME_OG: true
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit OG Images
+        uses: crazy-max/ghaction-github-pages@v3.0.0
+        with:
+          target_branch: og
+          build_dir: og
+          keep_history: false
+          committer: Harsh Raj <harshraj8843@users.noreply.github.com>
+          author: Harsh Raj <harshraj8843@users.noreply.github.com>
+          commit_message: |
+            add: og images - ${{ steps.date.outputs.time }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

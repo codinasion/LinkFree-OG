@@ -1,0 +1,36 @@
+name: "Generate OG"
+
+description: "Generate OG Images for LinkFree"
+
+inputs:
+  ######################################################
+  ##               LinkFree Related Inputs            ##
+  ######################################################
+  LINK_FREE_OWNER:
+    description: "Owner of the LinkFree repository"
+    required: true
+    default: "EddieHubCommunity"
+
+  LINK_FREE_REPO_NAME:
+    description: "Name of the LinkFree repository"
+    required: true
+    default: "LinkFree"
+
+  ######################################################
+  ##               Tokens Related Inputs              ##
+  ######################################################
+  TOKEN:
+    description: "github auto-generated access token"
+    required: true
+
+  ######################################################
+  ##           Workflow Related Inputs                ##
+  ######################################################
+  GENERATE_HOME_OG:
+    description: "generate homepage og image"
+    required: true
+    default: "false"
+
+runs:
+  using: "node16"
+  main: "../action.js"
