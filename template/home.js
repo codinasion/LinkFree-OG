@@ -94,7 +94,9 @@ const HomeOgTemplate = (
         </div>
         <div class="col-3 text-end">
             <small class="text-muted">
-                <b>${repoWebsite}</b>
+                <b>${repoWebsite
+                  .replace("https://", "")
+                  .replace("http://", "")}</b>
             </small>
         </div>
     </div>

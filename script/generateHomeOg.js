@@ -97,7 +97,7 @@ export default async function generateHomeOg(
     const dirPath = "og";
     fs.mkdirSync(dirPath, { recursive: true });
 
-    const contributorsToShow = contributorsList.slice(0, 116);
+    const contributorsToShow = contributorsList.slice(0, 130);
     const restOfContributors =
       contributorsList.length - contributorsToShow.length;
 
@@ -116,7 +116,7 @@ export default async function generateHomeOg(
     await console.log("Get screenshot...");
     const screenshot_data = {
       html: html,
-      filePath: `${dirPath}/profile.png`,
+      filePath: `${dirPath}/linkfree.png`,
     };
 
     await getScreenshot(screenshot_data);
