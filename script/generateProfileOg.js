@@ -42,7 +42,7 @@ export default async function generateProfileOg(LINK_FREE_PROFILE_API) {
       );
 
       if (profileResponse.status !== 200) {
-        core.setFailed(`Error fetching profile data for ${username}`);
+        await console.log(`Error fetching profile data for ${username}`);
         continue;
       }
 
