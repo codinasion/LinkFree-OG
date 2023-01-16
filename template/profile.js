@@ -112,27 +112,21 @@ const ProfileOgTemplate = (
                 ${userData.userSocialLinks
                   .slice(0, 10)
                   .map((link) =>
-                    (link.icon === "youtube" && link.url.includes("channel")) ||
-                    (link.icon === "twitter" &&
-                      (!link.url.startsWith("https://twitter.com/") ||
-                        !link.url.startsWith("http://twitter.com/"))) ||
-                    (link.icon === "github" &&
-                      (!link.url.startsWith("https://github.com/") ||
-                        !link.url.startsWith("http://github.com/"))) ||
-                    (link.icon === "youtube" &&
-                      (!link.url.startsWith("https://youtube.com/") ||
-                        !link.url.startsWith("http://youtube.com/"))) ||
-                    (link.icon === "linkedin" &&
-                      (!link.url.startsWith("https://linkedin.com/") ||
-                        !link.url.startsWith("http://linkedin.com/"))) ||
-                    (link.icon === "twitch" &&
-                      (!link.url.startsWith("https://twitch.com/") ||
-                        !link.url.startsWith("http://twitch.com/"))) ||
-                    (link.icon === "instagram" &&
-                      (!link.url.startsWith("https://instagram.com/") ||
-                        !link.url.startsWith("http://instagram.com/")))
+                    link.icon === "youtube" && link.url.includes("channel")
                       ? ""
-                      : `<div class="col-6 p-2">
+                      : link.url.startsWith("https://twitter.com/") ||
+                        link.url.startsWith("http://twitter.com/") ||
+                        link.url.startsWith("https://github.com/") ||
+                        link.url.startsWith("http://github.com/") ||
+                        link.url.startsWith("https://youtube.com/") ||
+                        link.url.startsWith("http://youtube.com/") ||
+                        link.url.startsWith("https://linkedin.com/") ||
+                        link.url.startsWith("http://linkedin.com/") ||
+                        link.url.startsWith("https://twitch.tv/") ||
+                        link.url.startsWith("http://twitch.tv/") ||
+                        link.url.startsWith("https://instagram.com/") ||
+                        link.url.startsWith("http://instagram.com/")
+                      ? `<div class="col-6 p-2">
                       <i class="fa ${
                         link.icon === "twitter"
                           ? "fa-twitter"
@@ -196,6 +190,7 @@ const ProfileOgTemplate = (
                           }
                       </b>
                   </div>`
+                      : ""
                   )
                   .join("")}
                 </div>
