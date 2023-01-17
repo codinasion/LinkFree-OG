@@ -46,7 +46,7 @@ const HomeOgTemplate = (
         <div class="col-10 pt-4 pl-4">
             <div class="col-12 pt-1">
                 <h1>
-                    <b>${repoName}e</b>
+                    <b>${repoName}</b>
                 </h1>
                 <small class="text-muted">
                     <i class="fa fa-github" style="font-size:15px;"></i>
