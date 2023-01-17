@@ -19,6 +19,6 @@ export default async function handler(
 
   // Send image as buffer
   res.setHeader("Content-Type", "image/png");
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=60");
+  res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate=3600");
   res.status(200).send(Buffer.from(buffer));
 }
