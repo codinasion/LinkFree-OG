@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import fetch from "node-fetch"
+import fetch from "node-fetch";
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,6 +19,9 @@ export default async function handler(
 
   // Send image as buffer
   res.setHeader("Content-Type", "image/png");
-  res.setHeader("Cache-Control", "public, max-age=21600, s-maxage=21600, stale-while-revalidate=21600");
+  res.setHeader(
+    "Cache-Control",
+    "public, max-age=21600, s-maxage=21600, stale-while-revalidate=21600"
+  );
   res.status(200).send(Buffer.from(buffer));
 }
