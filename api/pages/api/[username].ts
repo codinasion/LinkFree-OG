@@ -6,8 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Buffer>
 ) {
-  // Get username from request
-  const { username }: any = req.query;
+  // Get username string from url
+  const username: string = req.query.username as string;
 
   // fetch image from github as buffer
   const buffer = await fetch(
