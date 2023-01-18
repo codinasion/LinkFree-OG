@@ -2,6 +2,9 @@ name: Generate LinkFree OG Images
 
 on:
   workflow_dispatch:
+  # Update every 6 hours
+  schedule:
+    - cron: "0 0,6 * * *"
 
 jobs:
   generate_og_images:
