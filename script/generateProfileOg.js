@@ -218,7 +218,7 @@ export default async function generateProfileOg(
       await console.log("Get screenshot...");
       const screenshot_data = {
         html: html,
-        filePath: `${dirPath}/${username}.png`,
+        filePath: `${dirPath}/${username.toLowerCase()}.png`,
       };
 
       await getScreenshot(screenshot_data);
