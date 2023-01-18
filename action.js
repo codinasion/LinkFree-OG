@@ -29,7 +29,6 @@ import generateProfileOg from "./script/generateProfileOg.js";
       await generateProfileOg(
         LINK_FREE_OWNER,
         LINK_FREE_REPO_NAME,
-        TOKEN,
         LINK_FREE_PROFILE_API
       );
     }

@@ -11,7 +11,6 @@ import ProfileOgTemplate from "../template/profile.js";
 export default async function generateProfileOg(
   LINK_FREE_OWNER,
   LINK_FREE_REPO_NAME,
-  TOKEN,
   LINK_FREE_PROFILE_API
 ) {
   try {
@@ -24,9 +23,6 @@ export default async function generateProfileOg(
 
     const allProfilesResponse = await fetch(`${LINK_FREE_PROFILE_API}`, {
       method: "GET",
-      headers: {
-        Authorization: `token ${TOKEN}`,
-      },
     });
 
     if (allProfilesResponse.status !== 200) {
@@ -57,7 +53,7 @@ export default async function generateProfileOg(
         );
 
         const anotherProfileResponse = await fetch(
-          `https://raw.githubusercontent.com/EddieHubCommunity/LinkFree/main/data/${username}.json`,
+          `https://raw.githubusercontent.com/${LINK_FREE_OWNER}/${LINK_FREE_REPO_NAME}/main/data/${username}.json`,
           {
             method: "GET",
           }
@@ -70,7 +66,7 @@ export default async function generateProfileOg(
           continue;
         }
 
-        profileData = await JSON.parse(anotherProfileResponse.text());
+        profileData = await JSON.parse(await anotherProfileResponse.text());
       } else {
         profileData = await profileResponse.json();
       }
@@ -78,7 +74,19 @@ export default async function generateProfileOg(
 
       if (profileData.socials) {
         await console.log("Get social links...");
-        for (let link of profileData.socials) {
+
+        // Convert profileData.socials object keys to lowercase
+        // why: url vs Url vs URL
+        // ref: https://raw.githubusercontent.com/EddieHubCommunity/LinkFree/main/data/Drabzit.json
+        const socials = profileData.socials.map((obj) => {
+          const lowercaseObj = Object.keys(obj).reduce((acc, key) => {
+            acc[key.toLowerCase()] = obj[key];
+            return acc;
+          }, {});
+          return lowercaseObj;
+        });
+
+        for (let link of socials) {
           if (
             !userSocialLinks.some(
               (l) =>
@@ -128,7 +136,19 @@ export default async function generateProfileOg(
 
       if (profileData.links) {
         await console.log("Get links...");
-        for (let link of profileData.links) {
+
+        // Convert profileData.links object keys to lowercase
+        // why: url vs Url vs URL
+        // ref: https://raw.githubusercontent.com/EddieHubCommunity/LinkFree/main/data/Drabzit.json
+        const links = profileData.links.map((obj) => {
+          const lowercaseObj = Object.keys(obj).reduce((acc, key) => {
+            acc[key.toLowerCase()] = obj[key];
+            return acc;
+          }, {});
+          return lowercaseObj;
+        });
+
+        for (let link of links) {
           if (
             !userSocialLinks.some(
               (l) =>

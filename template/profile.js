@@ -115,17 +115,29 @@ const ProfileOgTemplate = (
                     link.icon === "youtube" && link.url.includes("channel")
                       ? ""
                       : link.url.startsWith("https://twitter.com/") ||
+                        link.url.startsWith("https://www.twitter.com/") ||
                         link.url.startsWith("http://twitter.com/") ||
+                        link.url.startsWith("http://www.twitter.com/") ||
                         link.url.startsWith("https://github.com/") ||
+                        link.url.startsWith("https://www.github.com/") ||
                         link.url.startsWith("http://github.com/") ||
+                        link.url.startsWith("http://www.github.com/") ||
                         link.url.startsWith("https://youtube.com/") ||
+                        link.url.startsWith("https://www.youtube.com/") ||
                         link.url.startsWith("http://youtube.com/") ||
+                        link.url.startsWith("http://www.youtube.com/") ||
                         link.url.startsWith("https://linkedin.com/") ||
+                        link.url.startsWith("https://www.linkedin.com/") ||
                         link.url.startsWith("http://linkedin.com/") ||
+                        link.url.startsWith("http://www.linkedin.com/") ||
                         link.url.startsWith("https://twitch.tv/") ||
+                        link.url.startsWith("https://www.twitch.tv/") ||
                         link.url.startsWith("http://twitch.tv/") ||
+                        link.url.startsWith("http://www.twitch.tv/") ||
                         link.url.startsWith("https://instagram.com/") ||
-                        link.url.startsWith("http://instagram.com/")
+                        link.url.startsWith("https://www.instagram.com/") ||
+                        link.url.startsWith("http://instagram.com/") ||
+                        link.url.startsWith("http://www.instagram.com/")
                       ? `<div class="col-6 p-2">
                       <i class="fa ${
                         link.icon === "twitter"
