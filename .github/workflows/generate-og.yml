@@ -1,5 +1,9 @@
 name: Generate LinkFree OG Images
 
+concurrency:
+  group: generate-og
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
   # Update every 6 hours

@@ -8,7 +8,12 @@ import getScreenshot from "./chromium.js";
 
 import ProfileOgTemplate from "../template/profile.js";
 
-export default async function generateProfileOg(LINK_FREE_PROFILE_API) {
+export default async function generateProfileOg(
+  LINK_FREE_OWNER,
+  LINK_FREE_REPO_NAME,
+  TOKEN,
+  LINK_FREE_PROFILE_API
+) {
   try {
     // Create profile directory
     const dirPath = "og/profile";
@@ -19,6 +24,9 @@ export default async function generateProfileOg(LINK_FREE_PROFILE_API) {
 
     const allProfilesResponse = await fetch(`${LINK_FREE_PROFILE_API}`, {
       method: "GET",
+      headers: {
+        Authorization: `token ${TOKEN}`,
+      },
     });
 
     if (allProfilesResponse.status !== 200) {
@@ -41,13 +49,31 @@ export default async function generateProfileOg(LINK_FREE_PROFILE_API) {
         }
       );
 
+      let profileData = [];
+
       if (profileResponse.status !== 200) {
-        await console.log(`Error fetching profile data for ${username}`);
-        continue;
+        await console.log(
+          `Error fetching profile data from API for ${username}`
+        );
+
+        const anotherProfileResponse = await fetch(
+          `https://raw.githubusercontent.com/EddieHubCommunity/LinkFree/main/data/${username}.json`,
+          {
+            method: "GET",
+          }
+        );
+
+        if (anotherProfileResponse.status !== 200) {
+          await console.log(
+            `Error fetching profile data from GitHub for ${username}`
+          );
+          continue;
+        }
+
+        profileData = await JSON.parse(anotherProfileResponse.text());
+      } else {
+        profileData = await profileResponse.json();
       }
-
-      const profileData = await profileResponse.json();
-
       const userSocialLinks = [];
 
       if (profileData.socials) {

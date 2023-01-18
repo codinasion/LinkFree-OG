@@ -89,7 +89,7 @@ const ProfileOgTemplate = (
                   : ""
               }
               ${
-                userData.userTags
+                userData.userTags && userData.userTags.length > 0
                   ? `<div class="col-9 pt-4">
                 ${userData.userTags
                   .map(
@@ -101,7 +101,7 @@ const ProfileOgTemplate = (
                   : ""
               }
               ${
-                userData.userSocialLinks
+                userData.userSocialLinks && userData.userSocialLinks.length > 0
                   ? `<div class="col-12 mt-4">
                 <h5>
                     <b>Connect With Me 🤝</b>
