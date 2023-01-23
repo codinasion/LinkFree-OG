@@ -19,7 +19,7 @@
 
 ### LinkFree Default OG
 
-```url
+```URL
 https://linkfreeog.codinasion.org
 ```
 
@@ -27,11 +27,27 @@ https://linkfreeog.codinasion.org
 
 ### LinkFree Profile OG
 
-```url
+```URL
 https://linkfreeog.codinasion.org/<GITHUB-USERNAME>
 ```
 
 ![LinkFree Profile OG](https://linkfreeog.codinasion.org/eddiejaoude)
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/codinasion/.github/master/assets/rainbow-hr.png" alt="rainbow hr" width="100%" height="70%">
+</div>
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+> **Note** All images are stored on this repository on the `og` branch. That's why the repo size is so big.
+
+If you want to contribute, then please don't `clone` the whole repo, instead, you can clone a specific branch using this command:
+
+```bash
+git clone --branch master --single-branch https://github.com/<USERNAME>/LinkFree-OG
+```
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/codinasion/.github/master/assets/rainbow-hr.png" alt="rainbow hr" width="100%" height="70%">
