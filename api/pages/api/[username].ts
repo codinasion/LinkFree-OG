@@ -24,7 +24,7 @@ export default async function handler(
   res.setHeader("Content-Type", "image/png");
   res.setHeader(
     "Cache-Control",
-    "public, max-age=21600, s-maxage=21600, stale-while-revalidate=21600"
+    "public, max-age=300, s-maxage=300, stale-while-revalidate=300"
   );
   res.status(200).send(Buffer.from(buffer));
 }
