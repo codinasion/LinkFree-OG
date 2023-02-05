@@ -1,5 +1,4 @@
-import chrome from "chrome-aws-lambda";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 
 const default_width = 1200;
 const default_height = 627;
@@ -13,35 +12,35 @@ export default async function getScreenshot(screenshot_data) {
     filePath = default_file_path,
   } = screenshot_data;
 
-  const options = process.env.AWS_REGION
-    ? {
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless,
-      }
-    : {
-        args: [],
-        executablePath:
-          process.platform === "win32"
-            ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-            : process.platform === "linux"
-            ? "/usr/bin/google-chrome"
-            : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-      };
+  // Create a browser instance
+  await console.log("Launching browser...");
+  const browser = await puppeteer.launch();
 
-  const browser = await puppeteer.launch(options);
-
+  // Create a new page
+  await console.log("Creating new page...");
   const page = await browser.newPage();
 
+  // Set viewport width and height
+  await console.log("Setting viewport...");
   await page.setViewport({ width: width, height: height });
 
+  // Set html content
+  await console.log("Setting html content...");
   await page.setContent(html);
 
-  await console.log("screenshot");
-  await page.screenshot({ type: "png", path: filePath });
+  // Wait for loading of all elements
+  await console.log("Waiting for loading of all elements...");
+  await page.waitForTimeout(5000);
 
-  await page.close();
+  // Capture screenshot
+  await console.log("Capturing screenshot...");
+  await page.screenshot({
+    type: "png",
+    path: filePath,
+  });
 
+  // Close the browser instance
+  await console.log("Closing browser...");
   await browser.close();
 
   return;

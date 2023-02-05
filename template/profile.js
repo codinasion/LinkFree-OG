@@ -63,7 +63,7 @@ const ProfileOgTemplate = (
   
       <div class="row">
           <div class="col-6">
-              <img src=${userData.userImage} alt=${
+              <img src='https://github.com/${userData.username}.png' alt=${
     userData.userName
   } class="rounded-3 shadow-lg"
                   style="width: 500px">
