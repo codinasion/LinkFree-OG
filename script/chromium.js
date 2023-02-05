@@ -28,10 +28,6 @@ export default async function getScreenshot(screenshot_data) {
   await console.log("Setting html content...");
   await page.setContent(html);
 
-  // Wait for loading of all elements
-  await console.log("Waiting for loading of all elements...");
-  await page.waitForTimeout(5000);
-
   // Capture screenshot
   await console.log("Capturing screenshot...");
   await page.screenshot({
