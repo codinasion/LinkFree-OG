@@ -20,18 +20,18 @@
 ### LinkFree Default OG
 
 ```URL
-https://linkfreeog.codinasion.org
+https://api.codinasion.org/linkfree-og
 ```
 
-![LinkFree Default OG](https://linkfreeog.codinasion.org)
+![LinkFree Default OG](https://api.codinasion.org/linkfree-og)
 
 ### LinkFree Profile OG
 
 ```URL
-https://linkfreeog.codinasion.org/<GITHUB-USERNAME>
+https://api.codinasion.org/linkfree-og/<GITHUB-USERNAME>
 ```
 
-![LinkFree Profile OG](https://linkfreeog.codinasion.org/eddiejaoude)
+![LinkFree Profile OG](https://api.codinasion.org/linkfree-og/eddiejaoude)
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/codinasion/.github/master/assets/rainbow-hr.png" alt="rainbow hr" width="100%" height="70%">
